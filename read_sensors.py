@@ -36,5 +36,16 @@ async def run():
         print(f"Attitude: Roll={attitude.roll_deg:.2f}, Pitch={attitude.pitch_deg:.2f}, Yaw={attitude.yaw_deg:.2f}")
         break
 
+    # Fetch Motor Outputs
+    print("waiting for motor outputs")
+    async for motor in drone.telemetry.actuator_output_status():
+        print(f"Output Status: Active={motor.active}, Actuator={motor.actuator}")
+        break
+
+    # Fetch velocity in the North-East-Down frame
+    print("waiting for target velocity")
+    async for velocity in drone.telemetry.velocity_ned():
+        print(f"Velocity: North={velocity.north_m_s}, East={velocity.east_m_s}, Down={velocity.down_m_s}")
+        break
 
 asyncio.run(run())
